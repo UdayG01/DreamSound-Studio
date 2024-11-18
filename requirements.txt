@@ -1,0 +1,12 @@
+# pearCreateFile: DreamSound Studio/requirements.txt
+tensorflow>=2.0.0
+pillow>=9.0.0
+numpy>=1.21.0
+matplotlib>=3.5.0
+librosa>=0.10.1
+soundfile>=0.12.1
+gradio>=3.50.2
+nbimporter>=0.3.4
+ipython>=8.0.0
+jupyter>=1.0.0
+scipy>=1.9.0
