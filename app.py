@@ -27,6 +27,18 @@ def get_base64_images():
     if os.path.exists(program_path):
         with open(program_path, "rb") as image_file:
             images['program'] = base64.b64encode(image_file.read()).decode()
+
+    # About section background
+    program_path = os.path.join(current_dir, 'assets', 'about-bg.jpg')
+    if os.path.exists(program_path):
+        with open(program_path, "rb") as image_file:
+            images['about'] = base64.b64encode(image_file.read()).decode()
+
+    # Gradio container background
+    gradio_container_path = os.path.join(current_dir, 'assets', 'container-bg.jpg')
+    if os.path.exists(gradio_container_path):
+        with open(gradio_container_path, "rb") as image_file:
+            images['gradio_container'] = base64.b64encode(image_file.read()).decode()
     
     return images
 
@@ -34,11 +46,16 @@ def get_base64_images():
 images = get_base64_images()
 hero_bg = f"data:image/jpeg;base64,{images.get('hero', '')}"
 program_bg = f"data:image/jpeg;base64,{images.get('program', '')}"
+about_bg = f"data:image/jpeg;base64,{images.get('about', '')}"
+container_bg = f"data:image/jpeg;base64,{images.get('gradio_container', '')}"
 
 # Custom CSS with base64 backgrounds
 custom_css = f"""
 .gradio-container {{
+
     background-color: #1a1a1a;
+    background: linear-gradient(rgba(42, 42, 42, 0.9), rgba(42, 42, 42, 0.9)),
+                url('{program_bg}');
     color: #ffffff;
 }}
 
@@ -50,8 +67,10 @@ custom_css = f"""
     text-align: center;
     margin-bottom: 40px;
     color: white;
+    border-radius: 10px;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     position: relative;
+    background-blend-mode: overlay;
 }}
 
 .hero-section::before {{
@@ -61,7 +80,9 @@ custom_css = f"""
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.6);
+    background: linear-gradient(rgba(42, 42, 42, 0.6), rgba(42, 42, 42, 0.6)),
+                url('{hero_bg}');
+    border-radius: 10px;
     z-index: 1;
 }}
 
@@ -77,16 +98,13 @@ custom_css = f"""
 .site-title h1 {{
     font-size: 4.5em;
     margin: 0;
-    background: linear-gradient(45deg, #00ffcc, #ff6b6b, #4ecdc4, #ff69b4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #4ecdc4; /* Single color */
+    text-shadow:
+        2px 2px 5px rgba(0, 0, 0, 0.5),
+        -2px -2px 5px rgba(255, 255, 255, 0.3);  /* 3D effect */
     text-transform: uppercase;
     letter-spacing: 3px;
     font-weight: 800;
-    text-shadow: 
-        3px 3px 6px rgba(0, 0, 0, 0.5),
-        -1px -1px 0 rgba(255, 255, 255, 0.2);
-    animation: titleGlow 3s infinite;
 }}
 
 
@@ -111,14 +129,92 @@ custom_css = f"""
 
 .about-section {{
     padding: 40px;
-    background-color: #2a2a2a;
+    background: linear-gradient(rgba(42, 42, 42, 0.75), rgba(42, 42, 42, 0.75)),
+                url('{about_bg}');
     border-radius: 10px;
     margin: 20px 0;
 }}
 
+.about-section h2 {{
+    text-align: center;
+    font-size: 2.8em;
+    margin-bottom: 30px;
+    background: linear-gradient(45deg, #00ffd9, #ff1e1e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}}
+
+.feature-cards {{
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: stretch;
+}}
+
+.feature-card {{
+    flex: 1;
+    background: rgba(25, 25, 25, 0.8);
+    border-radius: 15px;
+    padding: 25px;
+    border: 1px solid #444;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+}}
+
+.feature-card::before {{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #00ffd9, #ff1e1e);
+}}
+
+.feature-card:hover {{
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0, 255, 217, 0.2);
+}}
+
+.feature-card h3 {{
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #fff;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}}
+
+.feature-card p {{
+    color: #cccccc;
+    line-height: 1.6;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+}}
+
+.feature-card ul {{
+    color: #cccccc;
+    list-style-type: none;
+    padding: 0;
+    margin: 15px 0;
+}}
+
+.feature-card ul li {{
+    padding: 8px 0;
+    padding-left: 25px;
+    position: relative;
+}}
+
+.feature-card ul li::before {{
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: #00ffd9;
+}}
+
 .program-section {{
     background: linear-gradient(rgba(42, 42, 42, 0.75), rgba(42, 42, 42, 0.75)),
-                url('{program_bg}');
+                url('{about_bg}');
     background-size: cover;
     background-position: center;
     padding: 40px;
@@ -131,12 +227,13 @@ custom_css = f"""
     margin-bottom: 40px;
     padding: 20px;
     border-bottom: 2px solid #444;
+    background: rgba(30, 30, 30, 0.7);
 }}
 
 .program-header h2 {{
     font-size: 2.5em;
     margin-bottom: 15px;
-    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    background: linear-gradient(45deg, #00ffd9, #ff1e1e);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }}
@@ -300,17 +397,33 @@ def create_ui():
         with gr.Row(elem_classes="about-section"):
             gr.HTML("""
                 <h2>About DreamSound Studio</h2>
-                <div style="display: flex; gap: 20px;">
-                    <div>
+                <div class="feature-cards">
+                    <div class="feature-card">
                         <h3>Audio Style Transfer</h3>
-                        <p>Transfer the style of one song to another while maintaining the original content structure.</p>
+                        <p>Experience the magic of neural style transfer applied to audio. This groundbreaking technology allows you to infuse the musical characteristics of one track into another.</p>
+                        <ul>
+                            <li>Preserve content structure while adopting new styles</li>
+                            <li>Blend genres in ways never before possible</li>
+                            <li>Create unique sonic signatures</li>
+                            <li>Experiment with unlimited style combinations</li>
+                        </ul>
+                        <p>Perfect for musicians, producers, and sound designers looking to push creative boundaries and discover new sonic territories.</p>
                     </div>
-                    <div>
+                    
+                    <div class="feature-card">
                         <h3>DeepDream Audio</h3>
-                        <p>Apply Google's DeepDream concept to audio, creating surreal and dream-like sound experiences.</p>
+                        <p>Dive into the surreal world of audio dreams. Using Google's DeepDream technology, reimagined for sound, create otherworldly audio experiences.</p>
+                        <ul>
+                            <li>Transform ordinary sounds into dreamlike soundscapes</li>
+                            <li>Enhance and exaggerate sonic patterns</li>
+                            <li>Generate unique audio textures</li>
+                            <li>Explore AI-enhanced sound design</li>
+                        </ul>
+                        <p>An innovative tool for sound artists and experimental musicians seeking to explore the boundaries of audio manipulation.</p>
                     </div>
                 </div>
             """)
+
         
         # Program Section
         with gr.Group(elem_classes="program-section"):
