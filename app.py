@@ -63,6 +63,7 @@ custom_css = f"""
     background-image: url('{hero_bg}');
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
     padding: 60px 0;
     text-align: center;
     margin-bottom: 40px;
@@ -70,7 +71,7 @@ custom_css = f"""
     border-radius: 10px;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     position: relative;
-    background-blend-mode: overlay;
+    width: 100%;
 }}
 
 .hero-section::before {{
@@ -80,8 +81,7 @@ custom_css = f"""
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(rgba(42, 42, 42, 0.6), rgba(42, 42, 42, 0.6)),
-                url('{hero_bg}');
+    background: linear-gradient(rgba(42, 42, 42, 0.5), rgba(42, 42, 42, 0.5));
     border-radius: 10px;
     z-index: 1;
 }}
@@ -91,46 +91,70 @@ custom_css = f"""
     z-index: 2;
 }}
 
+.title-container {{
+    background: rgba(25, 25, 25, 0.1);  /* Similar to feature cards */
+    border-radius: 15px;
+    padding: 25px 40px;
+    border: 1px solid #444;
+    margin: 0 auto;  /* Centers the container */
+    max-width: 800px;  /* Limits the width */
+    position: relative;
+    overflow: hidden;
+}}
+
+.title-container::before {{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+}}
+
 .site-title {{
-    margin-bottom: 50px;
+    margin-bottom: 0;  /* Override previous margin */
 }}
 
 .site-title h1 {{
     font-size: 4.5em;
     margin: 0;
-    color: #4ecdc4; /* Single color */
+    color: #4ecdc4;
     text-shadow:
         2px 2px 5px rgba(0, 0, 0, 0.5),
-        -2px -2px 5px rgba(255, 255, 255, 0.3);  /* 3D effect */
+        -2px -2px 5px rgba(255, 255, 255, 0.3);
     text-transform: uppercase;
     letter-spacing: 3px;
     font-weight: 800;
 }}
-
-
 
 .site-title p {{
     color: #cccccc;
     font-size: 1.2em;
     margin-top: 10px;
     font-style: italic;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}}
+
+.hero-content  {{
+    margin-top: 60px;
 }}
 
 .hero-content h3 {{
     font-size: 2em;
-    margin-bottom: 15px;
+    margin-bottom: auto;
 }}
 
 .hero-content p {{
     font-size: 1em;
     max-width: 800px;
-    margin: 0 auto;
+    margin: auto;
 }}
 
 .about-section {{
     padding: 40px;
-    background: linear-gradient(rgba(42, 42, 42, 0.75), rgba(42, 42, 42, 0.75)),
+    background: linear-gradient(rgba(42, 42, 42, 0.5), rgba(42, 42, 42, 0.5)),
                 url('{about_bg}');
+    background-repeat: no-repeat;
     border-radius: 10px;
     margin: 20px 0;
 }}
@@ -169,7 +193,6 @@ custom_css = f"""
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #00ffd9, #ff1e1e);
 }}
 
 .feature-card:hover {{
@@ -213,7 +236,7 @@ custom_css = f"""
 }}
 
 .program-section {{
-    background: linear-gradient(rgba(42, 42, 42, 0.75), rgba(42, 42, 42, 0.75)),
+    background: linear-gradient(rgba(42, 42, 42, 0.5), rgba(42, 42, 42, 0.5)),
                 url('{about_bg}');
     background-size: cover;
     background-position: center;
@@ -383,9 +406,11 @@ def create_ui():
         # Hero Section with Site Title
         with gr.Row(elem_classes="hero-section"):
             gr.HTML("""
-                <div class="site-title">
-                    <h1>DreamSound Studio</h1>
-                    <p>Where AI Meets Musical Creativity</p>
+                <div class="title-container">
+                    <div class="site-title">
+                        <h1>DreamSound Studio</h1>
+                        <p>Where AI Meets Musical Creativity</p>
+                    </div>
                 </div>
                 <div class="hero-content">
                     <h2>Transform Your Music with AI</h2>
