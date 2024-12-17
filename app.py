@@ -364,6 +364,7 @@ def process_audio_style_transfer(content_audio, style_audio):
         sf.write(content_temp.name, content_audio[1], content_audio[0])
         with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as style_temp:
             sf.write(style_temp.name, style_audio[1], style_audio[0])
+            print(content_temp.name, style_temp.name)
             
             # Process the audio files
             output_audio, sr = audio_style_transfer(content_temp.name, style_temp.name)
