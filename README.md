@@ -2,13 +2,9 @@
 
 Transform your audio with AI! DreamSound Studio combines the power of neural style transfer and DeepDream technology to create unique and dreamlike audio experiences.
 
-<table>
-  <tr>
-    <td style="text-align: center;">
-      <img src="https://github.com/user-attachments/assets/af8588af-6029-43f2-b6c5-50cba1365101" alt="DreamSound logo" style="width: 300px;">
-    </td>
-  </tr>
-</table>
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/af8588af-6029-43f2-b6c5-50cba1365101" alt="DreamSound logo" style="width: auto;">
+</p>
 
 ## Table of Contents
 
